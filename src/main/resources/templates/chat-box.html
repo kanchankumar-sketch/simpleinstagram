@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>Spring Boot WebSocket Chat Application | CalliCoder</title>
+<link rel="icon" href="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" type="image/icon type">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+	rel="stylesheet" />
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+	rel="stylesheet" />
+<!-- MDB -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet" href="/css/main.css" />
+
+<style type="text/css">
+#notification {
+    position:fixed;
+    top:0px;
+    z-index:105;
+    text-align:center;
+    font-weight:normal;
+    font-size:14px;
+    font-weight:bold;
+    color:white;
+    background-color:#FF7800;
+    padding:5px;
+}
+#notification span.dismiss {
+    border:2px solid #FFF;
+    padding:0 5px;
+    cursor:pointer;
+    float:right;
+    margin-right:10px;
+}
+#notification a {
+    color:white;
+    text-decoration:none;
+    font-weight:bold
+}
+</style>
+
+</head>
+<body background="/18.jpg"
+	style="background-position: center; background-repeat: no-repeat; background-size: cover;">
+	<noscript>
+		<h2>Sorry! Your browser doesn't support Javascript</h2>
+	</noscript>
+<div id="notification" style="display: none;">
+</div>
+	<div id="username-page">
+	
+		<div class="username-page-container">
+			<h1 class="title">Select to message</h1>
+			<form id="usernameForm" name="usernameForm">
+				<div class="form-group">
+						<select id="recievername" placeholder="Reciever Name" class="form-control">
+						<div th:each="friend:${frienList}">
+						 <option th:text="${friend.getProfileName()}" th:value="${friend.getProfileName()}">
+						</div>
+						<!-- <option th:text="${friend.getProfileName()}" th:value="${friend.getProfileName()}"> -->
+						</select>
+				</div>
+				<div class="form-group">
+				<p>&#128512;</p>
+					<button type="button" id="startChat" class="accent username-submit">Start Chatting</button>
+					<a onclick="back1()" class="btn btn-primary accent username-submit">Cancel</a>
+				</div>
+			</form>
+		</div>
+		
+	</div>
+
+	<div id="chat-page" class="hidden">
+		<div class="chat-container">
+			<div class="chat-header">
+				<h2 id="recieverNameToShow"></h2>
+			</div>
+			<div class="connecting">Connecting...</div>
+			<ul id="messageArea">
+
+			</ul>
+			<form id="messageForm" name="messageForm" nameForm="messageForm">
+				
+				<div class="form-group">
+					<div class="input-group clearfix">
+				
+						<input type="text" id="message" placeholder="Type a message..."
+							autocomplete="off" class="form-control" />
+							
+						<button type="submit" class="primary">Send</button>
+					</div>
+				</div>
+			</form>
+				<button onclick="back()" class="accent username-submit">Back</button>
+				<a onclick="back1()" class="btn btn-primary accent username-submit">Cancel</a>
+		</div>
+	</div>
+	
+<script type="text/javascript">
+var currentUserId="[[${userProfile.getProfileName()}]]";
+var otherMessage=[];
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script src="/js/main.js"></script>
+	<script type="text/javascript">
+
+	$('#startChat').click(function(){
+		var reciever=$('#recievername').val();
+		$('#recieverNameToShow').text("Chatting with "+reciever);
+		$('#username-page').toggle();
+		$('#chat-page').toggle();
+		$('#messageArea').html('');
+		console.log("......................................................................"+otherMessage.length+"..............................................................................");
+		var otherMessage1=otherMessage;
+		for(var i=0;i<otherMessage.length;i++)
+			{
+				onMessageReceived(otherMessage[i],true);
+				//otherMessage1[i]=0;
+			}
+		//otherMessage1=otherMessage1.filter(e=>e!=0);
+		//otherMessage=otherMessage1;
+	})
+	
+	function back()
+	{
+		$('#username-page').toggle();
+		$('#chat-page').toggle();
+	}
+	function back1()
+	{
+		$(location).prop('href','home');
+	}
+	function notification(sender,content)
+	{
+		$("#notification").fadeIn("slow").text('"'+content+'" from '+sender);
+		var myInterval=setInterval(function() { 
+			$("#notification").fadeOut("slow")
+			clearInterval(myInterval);	
+		}, 3000);
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Connecting</title>
+<link rel="icon" href="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+	type="image/icon type">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+	rel="stylesheet" />
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+	rel="stylesheet" />
+<!-- MDB -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
+	rel="stylesheet" />
+
+<style type="text/css">
+.hide::-webkit-scrollbar {
+	display: none;
+}
+</style>
+</head>
+<body style="position: fixed; top: 0; right: 0; left: 0;">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav mr-auto p-2">
+				<li class="nav-item active"><a class="nav-link" href="#">Profile</a>
+				</li>
+				<li class="nav-item active"><a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="#">Posts</a></li>
+			</ul>
+
+		</div>
+		<ul class="navbar-nav p-2">
+			<li class="nav-item"><a class="btn btn-danger"
+				th:href="@{/logout}">Logout</a></li>
+		</ul>
+	</nav>
+	<section class="p-3">
+		<div class="container-fluid p-2  fixed">
+			<div class="row">
+				<div class="col-2 "></div>
+				<div class="col-1 g-0 text-center"></div>
+				<div class="col-5" >
+					<div class="row">
+						<div class="row d-flex justify-content-center text-center">
+							<img id="profileImage"
+								th:src="${userProfile.getProfileImagePath()}"
+								class="rounded-circle" style="width: 150px;height: 126px;" alt="Avatar" />
+						</div>
+						<div class="row d-flex justify-content-center text-center p-2">
+							<button class="btn btn-light" onclick="openSelector()"
+								style="width: auto;">Choose profile</button>
+							<input type="file" name="file" id="file" accept="image/*"
+								onchange="readURL(this)" style="display: none;" />
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="row d-flex justify-content-center text-center p-3">
+							<input type="text" th:value="${userProfile.getProfileName()}" name="name" id="name" class="form-control"
+								placeholder="Your name" />
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="row d-flex justify-content-center text-center p-3">
+							<textarea id="bio" name="bio"  th:text="${userProfile.getBio()}" rows="4" class="form-control"
+								cols="50" placeholder="Your bio"></textarea>
+						</div>
+						<div class="row d-flex justify-content-center text-center p-2">
+							<button class="btn btn-success m-2" onclick="saveProfile()"
+								style="width: auto;">Update</button>
+								<button class="btn btn-danger m-2" onclick="cancelProfile()"
+								style="width: auto;">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-1 g-0 text-center"></div>
+				<div class="col-3 "></div>
+			</div>
+		</div>
+	</section>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+
+	<script type="text/javascript">
+		var form = new FormData();
+		function readURL(input) {
+			$.each($("input[type='file']")[0].files, function(i, file) {
+				form = new FormData();
+				form.append("file",file);
+				var t = window.URL || window.webkitURL;
+				var objectUrl = t.createObjectURL(file);
+				$('#profileImage').attr('src', objectUrl);
+			});
+		}
+		function openSelector() {
+			$('#file').trigger('click');
+		}
+		
+		function saveProfile()
+		{
+			var userProfileName=$('#name').val();
+			var bio=$('#bio').val();
+			if(userProfileName.trim()=='')
+				{
+					alert("Cannot leave ther profile name empty");
+				}
+			else
+				{
+				var id='[[${id}]]';
+					 var settings2 = {
+							  "url": "/common/upload-profile/"+id,
+							  "method": "POST",
+							  "timeout": 0,
+							  "processData": false,
+							  "mimetype":"multipart/form-data",
+							  "contentType": false,
+							  "data":form
+							};
+
+							$.ajax(settings2).done(function (response) {
+							  console.log(response);
+							  
+							  
+							  var UserProfileDetail={
+									  profileName:userProfileName.trim(),
+									  bio:bio
+							  }
+							  
+							  var settings = {
+									  "url": "/common/upload-profile-details/"+id,
+									  "method": "POST",
+									  "timeout": 0,
+									  "processData": false,
+									  "contentType":"application/json",
+									  "data":JSON.stringify(UserProfileDetail)
+									};
+
+									$.ajax(settings).done(function (response) {
+									  console.log(response);
+									  $(location).prop('href', 'home');
+									}); 
+							  
+							  
+							}); 
+							
+					
+				}
+			
+			
+			
+		}
+		
+		function cancelProfile()
+		{
+			$(location).prop('href', 'home');
+		}
+	</script>
+</body>
+</html>

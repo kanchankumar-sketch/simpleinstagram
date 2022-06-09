@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Connecting</title>
+<link rel="icon" href="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" type="image/icon type">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+	rel="stylesheet" />
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+	rel="stylesheet" />
+<!-- MDB -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
+	rel="stylesheet" />
+	
+	<style type="text/css">
+	.hide::-webkit-scrollbar {
+    display: none;
+}
+
+	</style>
+</head>
+<body style="position: fixed; top: 0; right: 0; left: 0;">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav mr-auto p-2">
+				<li class="nav-item active"><a class="nav-link" href="#">Profile</a>
+				</li>
+				<li class="nav-item active"><a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="#">Posts</a></li>
+			</ul>
+
+		</div>
+		<ul class="navbar-nav p-2">
+			<li class="nav-item"><a class="btn btn-danger"
+				th:href="@{/logout}">Logout</a></li>
+		</ul>
+	</nav>
+	<section class="p-3">
+		<div class="container-fluid p-2  fixed">
+			<div class="row">
+				<div class="col-2 bg-light">
+					<!-- <h1 th:text="${username}"></h1> -->
+					<div class="row d-flex justify-content-center text-center">
+						<img th:uid="${id}" onclick="viewProfile(this.getAttribute('uid'))" th:src="${userProfile.getProfileImagePath()}"
+							class="rounded-circle" style="width: 150px;height: 126px;cursor: pointer;" alt="Avatar" title="View Profile"/>
+						<p th:text="${userProfile.getProfileName()}">
+					</div>
+					<div class="row d-flex justify-content-center text-center">
+						<a class="btn btn-primary btn-sm " onclick="updateProfile()" style="width: auto;">Update profile</a>
+					</div>
+					<div class="row d-flex justify-content-center p-3">
+						<ul style="list-style-type: none;">
+							<li>Menu</li>
+							<li>
+								<ul style="list-style-type: none;">
+									<li class="p-2" onclick="newFeed()" style="cursor: pointer;">
+										<?xml version="1.0"?> <svg fill="#000000"
+											xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+											width="20px" height="20px">    <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z" /></svg>
+										<span>New feed</span>
+
+									</li>
+									<li class="p-2" onclick="startChat()" style="cursor: pointer;">
+										<?xml version="1.0" encoding="iso-8859-1"?> <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+										<?xml version="1.0" encoding="iso-8859-1"?> <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+										<svg version="1.1" id="Layer_1"
+											xmlns="http://www.w3.org/2000/svg"
+											xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+											width="20px" height="20px" viewBox="0 0 460.047 460.047"
+											style="enable-background: new 0 0 460.047 460.047;"
+											xml:space="preserve">
+		<g>
+		<g>
+		<path
+												d="M439.616,1.029L9.615,166.405c-5.625,2.163-9.409,7.482-9.607,13.505c-0.199,6.023,3.225,11.58,8.694,14.11l175.93,81.379
+			l81.379,175.93c2.46,5.318,7.782,8.703,13.612,8.703c0.165,0,0.332-0.002,0.498-0.008c6.023-0.199,11.342-3.983,13.505-9.607
+			c0.755-1.963,164.899-428.76,165.398-430.069C463.713,7.965,451.423-3.511,439.616,1.029z M53.478,181.677L384.415,54.402
+			L192.728,246.089L53.478,181.677z M278.353,406.552l-64.412-139.25L405.629,75.614L278.353,406.552z" /></g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g></svg> Message
+									</li>
+									<li class="p-2">
+										<?xml version="1.0" encoding="iso-8859-1"?> <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+										<svg version="1.1" id="Capa_1"
+											xmlns="http://www.w3.org/2000/svg"
+											xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+											width="20px" height="20px" viewBox="0 0 55 55"
+											style="enable-background: new 0 0 55 55;"
+											xml:space="preserve">
+					<path
+												d="M54.5,10c0-5.514-4.486-10-10-10c-4.469,0-8.261,2.948-9.539,7H5.735C2.849,7,0.5,9.349,0.5,12.235v37.529
+						C0.5,52.651,2.849,55,5.735,55h37.529c2.887,0,5.235-2.349,5.235-5.235V19.159C52.027,17.612,54.5,14.091,54.5,10z M46.5,49.765
+						c0,1.784-1.451,3.235-3.235,3.235H5.735C3.951,53,2.5,51.549,2.5,49.765V12.235C2.5,10.451,3.951,9,5.735,9h28.815
+						C34.518,9.329,34.5,9.662,34.5,10c0,5.514,4.486,10,10,10c0.685,0,1.354-0.07,2-0.202V49.765z M47.154,17.538
+						c-0.198,0.07-0.398,0.13-0.599,0.185c-0.036,0.01-0.073,0.019-0.109,0.028c-0.177,0.045-0.355,0.084-0.534,0.117
+						c-0.092,0.017-0.186,0.029-0.279,0.043c-0.134,0.02-0.269,0.04-0.403,0.053C44.989,17.985,44.746,18,44.5,18c-4.411,0-8-3.589-8-8
+						c0-0.58,0.069-1.177,0.206-1.777C37.517,4.665,40.7,2,44.5,2c4.411,0,8,3.589,8,8C52.5,13.48,50.262,16.44,47.154,17.538z" />
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+											
+											<g></g>
+					</svg> Notification
+									</li>
+									<li class="p-2">
+										<?xml version="1.0" encoding="iso-8859-1"?> <!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+										<svg version="1.1" id="Capa_1"
+											xmlns="http://www.w3.org/2000/svg"
+											xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+											width="20px" height="20px" viewBox="0 0 264.018 264.018"
+											style="enable-background: new 0 0 264.018 264.018;"
+											xml:space="preserve">
+						<g>
+							<path
+												d="M132.009,0c-42.66,0-77.366,34.706-77.366,77.366c0,11.634,2.52,22.815,7.488,33.24c0.1,0.223,0.205,0.442,0.317,0.661
+								l58.454,113.179c2.146,4.154,6.431,6.764,11.106,6.764c4.676,0,8.961-2.609,11.106-6.764l58.438-113.148
+								c0.101-0.195,0.195-0.392,0.285-0.591c5.001-10.455,7.536-21.67,7.536-33.341C209.375,34.706,174.669,0,132.009,0z
+								 M132.009,117.861c-22.329,0-40.495-18.166-40.495-40.495c0-22.328,18.166-40.494,40.495-40.494s40.495,18.166,40.495,40.494
+								C172.504,99.695,154.338,117.861,132.009,117.861z" />
+							<path
+												d="M161.81,249.018h-59.602c-4.143,0-7.5,3.357-7.5,7.5c0,4.143,3.357,7.5,7.5,7.5h59.602c4.143,0,7.5-3.357,7.5-7.5
+								C169.31,252.375,165.952,249.018,161.81,249.018z" /></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g></svg> Location
+									</li>
+									<li class="p-2">
+										<?xml version="1.0" encoding="iso-8859-1"?> <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+										<svg version="1.1" id="Layer_1"
+											xmlns="http://www.w3.org/2000/svg"
+											xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+											viewBox="0 0 512.005 512.005" width="20px" height="20px"
+											style="enable-background: new 0 0 512.005 512.005;"
+											xml:space="preserve">
+						<g>
+							<g>
+								<g>
+									
+										<rect x="6.848" y="483.502"
+												transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -325.9751 857.8331)"
+												width="15.655" height="25.853" />
+									
+										<rect x="479.108" y="125.251"
+												transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 736.5913 572.8429)"
+												width="15.654" height="17.235" />
+									<path
+												d="M504.677,91.749c-2.354-2.352-5.066-4.128-7.958-5.348l13.493-13.493L438.203,0.901L244.316,194.787l6.094,6.094
+										L67.596,383.695l6.094,6.094l-42.657,42.657l18.281,18.281L24.38,475.662l11.069,11.069l24.934-24.934l18.281,18.281
+										l42.657-42.657l6.094,6.094l182.815-182.815l6.094,6.094l163.096-163.097l0.879-0.879c1.776-1.777,4.139-2.755,6.653-2.755
+										c2.513,0,4.876,0.979,6.653,2.755c3.669,3.669,3.669,9.636,0,13.305l11.071,11.07
+										C514.448,117.423,514.448,101.522,504.677,91.749z M78.665,457.939l-25.493-25.493l31.588-31.587l25.493,25.493L78.665,457.939z
+										 M127.417,421.376l-37.681-37.681l13.305-13.305l37.681,37.681L127.417,421.376z M151.791,397.001l-37.681-37.681l147.371-147.37
+										l37.68,37.68L151.791,397.001z M316.326,244.655l-49.868-49.868l13.305-13.305l49.868,49.868L316.326,244.655z M340.7,220.279
+										l-49.868-49.869L413.827,47.417l49.868,49.868L340.7,220.279z M474.766,86.215l-49.868-49.869l13.305-13.305l49.868,49.868
+										L474.766,86.215z" />
+									<polygon
+												points="469.23,140.501 354.006,255.724 371.728,273.447 382.799,262.377 376.146,255.724 480.3,151.57 			" /></g></g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g>
+											<g></g></svg> Privacy
+									</li>
+									<li class="p-2"><svg width="20px" height="20px" viewBox="0 0 20 20"
+											xmlns="http://www.w3.org/2000/svg">
+  										<path fill="#555"
+												d="M11.078035,0 C11.3724371,0 11.6350302,0.183056678 11.7339285,0.457230801 L12.4396543,2.41370379 C12.6930786,2.47650967 12.9108093,2.54030436 13.0942558,2.60592238 C13.2952001,2.67779926 13.5540423,2.78741449 13.8746747,2.93586046 L15.5184936,2.06596774 C15.794148,1.92009416 16.1343396,1.97375545 16.3504064,2.19719235 L17.7960017,3.69209722 C17.98787,3.8905102 18.0422042,4.18265582 17.9342767,4.43557836 L17.162857,6.24336136 C17.2913496,6.47797752 17.3939318,6.67854463 17.4711247,6.84658462 C17.5553742,7.02998593 17.6588292,7.28241713 17.7829588,7.60671302 L19.580333,8.37623211 C19.8497082,8.4915611 20.0170118,8.76152727 19.9986241,9.05119919 L19.8669066,11.126215 C19.8494975,11.4004703 19.668825,11.6382294 19.4072566,11.7310995 L17.7049419,12.3355083 C17.6562729,12.5705675 17.6053791,12.772402 17.551477,12.9424906 C17.4883274,13.1417599 17.389065,13.3979932 17.2526724,13.7155635 L18.1084613,15.6068822 C18.2316885,15.879218 18.1635045,16.1990386 17.9395819,16.3990196 L16.3138559,17.8509252 C16.0957241,18.0457347 15.7773686,18.084139 15.5182641,17.9469002 L13.8421792,17.0591354 C13.5477413,17.2124998 13.2783109,17.3348831 13.0324612,17.4263047 C12.8127426,17.5080092 12.5685018,17.5992352 12.2997543,17.6999771 L11.6499659,19.5002547 C11.5529743,19.7689756 11.2984077,19.9507082 11.0099151,19.9571805 L9.10927684,20 C8.81300029,20.0064684 8.54492708,19.8269822 8.44118272,19.5525044 L7.6751041,17.5256808 C7.3232066,17.4026533 7.06612795,17.3070148 6.89898146,17.2366139 C6.74058527,17.1698987 6.53544077,17.0722593 6.28058727,16.9426265 L4.38190658,17.7549437 C4.12577479,17.8645252 3.82821583,17.812324 3.62584584,17.6223069 L2.22106797,16.3032781 C2.00593124,16.1012735 1.94386481,15.7866753 2.0664447,15.519534 L2.88322205,13.7395109 C2.76017205,13.4979963 2.65957084,13.2838441 2.58116863,13.0959926 C2.49857708,12.8981035 2.39862152,12.628586 2.28009144,12.2848943 L0.491710371,11.7412063 C0.190471763,11.6496264 -0.0110085834,11.3694211 0.000465944291,11.0580168 L0.071249487,9.13703967 C0.0806273232,8.88253689 0.2313194,8.65393727 0.463026654,8.5427144 L2.34096885,7.64127468 C2.42759746,7.32228988 2.50386559,7.07419005 2.57165467,6.89274074 C2.63878533,6.7130538 2.74293335,6.47740464 2.8854431,6.18143219 L2.06997455,4.45996626 C1.94312228,4.19217928 2.00336838,3.87420996 2.21965377,3.66998322 L3.62443163,2.34352648 C3.82439931,2.15470767 4.11840992,2.10075785 4.37358276,2.20606012 L6.27210909,2.98952564 C6.4823493,2.85093927 6.67247185,2.73658268 6.84371422,2.6461118 C7.04934485,2.53747289 7.3225817,2.42318736 7.66837893,2.29976859 L8.32789678,0.458652854 C8.42637398,0.183743082 8.68933933,0 8.98430143,0 L11.078035,0 Z M10.0237083,7.01854658 C8.35715373,7.01854658 7.00614429,8.35435786 7.00614429,10.0021646 C7.00614429,11.6499713 8.35715373,12.9857826 10.0237083,12.9857826 C11.6902629,12.9857826 13.0412723,11.6499713 13.0412723,10.0021646 C13.0412723,8.35435786 11.6902629,7.01854658 10.0237083,7.01854658 Z" />
+								</svg> Setting</li>
+								</ul>
+
+							</li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-1 g-0 text-center"></div>
+				<div class="col-5" >
+					<!-- <h1 th:text="${role}"></h1> -->
+					<div class="row d-flex justify-content-center text-center">
+						<input type="search" class="form-control" placeholder="Search"
+							style="width: 50%;">
+					</div>
+					<hr>
+					<div class="row">
+						<img th:uid="${id}" onclick="viewProfile(this.getAttribute('uid'))" th:src="${userProfile.getProfileImagePath()}"
+							class="rounded-circle" style="width: 60px;height:36px;cursor: pointer;" alt="Avatar"
+							th:text="${userProfile.getProfileName()}" title="view profile" />
+					</div>
+					<div class="row p-2">
+						<input type="search" class="form-control"
+							placeholder="Whats on your mind?" style="width: 30%;">
+				
+					</div>
+					<div class="row p-2 hide" style="overflow-y: scroll; height: 720px;">
+						<div th:each="post:${posts}" class="row ">
+						<div class="row p-2">
+							<div class="col">
+								<img th:src="${post.getProfilePath()}"
+									class="rounded-circle" style="width: 60px;height: 60px;cursor: pointer;" alt="Avatar"
+									th:text="${post.getProfileName()}" th:uid="${post.getId()}" onclick="viewProfile(this.getAttribute('uid'))" title="view profile" />
+
+							</div>
+							<div class="col-2 d-flex justify-content-center text-center">
+							<!-- 	<button class="btn btn-light" style="width: auto; height: auto;" th:idea="${post.getId()}" onclick="following(this.getAttribute('idea'))"><i class="fas fa-ellipsis-v fa-2x"></i></button> -->
+							<i class="fas fa-ellipsis-v fa-1x"></i>
+							</div>
+							<div style="margin-left: 10%;margin-top: -3%;" ><i class="fa fa-map-marker"  style="float: left;" aria-hidden="true"></i><p th:text="${post.getLocation()}"></p></div>
+						</div>
+						<div class="row">
+							<img th:src="${post.getPostFilePath()}" />
+						</div>
+						<div class="row">
+							<p th:text="${post.getDescription()}"></p>
+						</div>
+						<div class="row ">
+						<ul  style="list-style-type: none;">
+						<li class="p-2" style="float: left;">Like</li>
+						<li class="p-2" style="float: left;">Comment</li>
+						<li class="p-2" style="float: left;">Share</li>
+						</ul>
+						</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-1 g-0 text-center"></div>
+				<div class="col-3 bg-light">
+					<!-- <h1 th:text="${role}"></h1> -->
+					<ul style="list-style-type: none;">
+						<li>Top places</li>
+						<li>
+							<ul style="list-style-type: none;" class="p-2">
+								<li class="p-1"><img
+									src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+									class="rounded-circle" style="width: 30px;" alt="Avatar"
+									th:text="${username}" /></li>
+								<li class="p-1"><img
+									src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+									class="rounded-circle" style="width: 30px;" alt="Avatar"
+									th:text="${username}" /></li>
+								<li class="p-1"><img
+									src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+									class="rounded-circle" style="width: 30px;" alt="Avatar"
+									th:text="${username}" /></li>
+								<li class="p-1"><img
+									src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+									class="rounded-circle" style="width: 30px;" alt="Avatar"
+									th:text="${username}" /></li>
+								<li class="p-1"><img
+									src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+									class="rounded-circle" style="width: 30px;" alt="Avatar"
+									th:text="${username}" /></li>
+							</ul>
+						</li>
+					</ul>
+					<ul style="list-style-type: none;">
+						<li>Sponser</li>
+						<li>
+								<marquee>
+							<table>
+						<!-- 		<tr style="display:block;overflow:auto;width:600px;"> -->
+								<tr>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>	
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+									<td><img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+										style="width: 150px; height: 100px;" alt="Avatar" />
+									</td>
+								</tr>
+							</table>
+			</marquee>
+						</li>
+					</ul>
+					<ul style="list-style-type: none;">
+						<li>Suggestion</li>
+						<li>
+							<ul style="list-style-type: none;" class="p-3">
+								<li class="p-1" th:each="userSuggestion : ${userSuggestions}"><img
+									th:src="${userSuggestion.getProfileImagePath()}"  th:fid="${userSuggestion.getId()}" onclick="viewProfile(this.getAttribute('fid'))"
+									class="rounded-circle" style="width: 30px;height: 30px;cursor: pointer;" alt="Avatar"
+									th:text="${userSuggestion.getProfileName()}" /> <a class="p-2" style="cursor: pointer;"  th:fid="${userSuggestion.getId()}" th:id="${userProfile.getUserId()}" onclick="follow(this.getAttribute('id'),this.getAttribute('fid'),this)">follow</a></li>
+								
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+		
+		<script type="text/javascript">
+		function updateProfile()
+				{
+					$(location).prop('href', 'update-Profile');
+				}
+		
+		function following(idea)
+		{
+			alert("following started."+idea);
+			
+		}
+		function follow(id,fid,element)
+		{
+			//alert(id+"-"+fid);
+			$(element).text("following")
+			  var settings = {
+					  "url": "/common/follow/"+id+"/"+fid,
+					  "method": "POST",
+					  "timeout": 0
+					};
+
+					$.ajax(settings).done(function (response) {
+					  console.log(response);
+					}); 
+			
+			
+		}
+		
+		function newFeed()
+		{
+			$(location).prop('href', 'new-feed');
+		}
+		function viewProfile(uid)
+		{
+			
+			$(location).prop('href', '/common/view-profile/'+uid);
+		}
+		
+		
+		function startChat()
+		{
+			$(location).prop('href', 'chat');
+			
+		}
+		</script>
+</body>
+</html>

@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.connecting</groupId>
-	<artifactId>SimpleSocialMedia</artifactId>
-	<version>0.0.1</version>
-	<name>SimpleSocialMedia</name>
+	<artifactId>simpleinstagram</artifactId>
+	<version>1</version>
+	<name>simpleinstagram</name>
 	<description>Try to create simple social media</description>
 	<properties>
 		<java.version>11</java.version>

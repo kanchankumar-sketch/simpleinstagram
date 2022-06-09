@@ -1,2 +1,2 @@
 # simpleinstagram
-# kanchan kuamr
+# kanchan kumar
